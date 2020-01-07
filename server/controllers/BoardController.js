@@ -16,7 +16,7 @@ export default class BoardsController {
       .use(this.defaultRoute)
   }
 
-  // this is pretty neat
+  // this is pretty neato
 
   defaultRoute(req, res, next) {
     next({ status: 404, message: 'No Such Route' })

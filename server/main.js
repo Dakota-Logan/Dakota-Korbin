@@ -36,8 +36,16 @@ server.use('/account', new UserController().router)
 
 //YOUR ROUTES HERE!!!!!!
 import BoardController from './controllers/BoardController'
+import ListController from "./controllers/ListsController"
+import TaskController from "./controllers/TasksController"
+import CommentController from "./controllers/CommentsController"
+
+
 
 server.use('/api/boards', new BoardController().router);
+server.use('/api/lists', new ListController().router);
+server.use('/api/tasks', new TaskController().router);
+server.use('/api/comments', new CommentController().router);
 // server.use('api/');
 
 
