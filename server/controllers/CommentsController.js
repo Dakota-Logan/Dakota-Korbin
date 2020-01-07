@@ -8,7 +8,7 @@ export default class CommentsController {
   constructor() {
     this.router = express.Router()
       .use(Authorize.authenticated)
-      // .get('', this.getAll)
+      .get('', this.getAll)
       .get('/:id', this.getById)
       .post('', this.create)
       .put('/:id', this.edit)
@@ -22,14 +22,14 @@ export default class CommentsController {
     next({ status: 404, message: 'No Such Route' })
   }
 
-  // async getAll(req, res, next) {
-  //   try {
-  //     //only gets comments by user who is logged in
-  //     let data = await _commentService.getAll(req.session.uid)
-  //     return res.send(data)
-  //   }
-  //   catch (err) { next(err) }
-  // }
+  async getAll(req, res, next) {
+    try {
+      //only gets comments by user who is logged in
+      let data = await _commentService.getAll(req.session.uid)
+      return res.send(data)
+    }
+    catch (err) { next(err) }
+  }
 
   async getById(req, res, next) {
     try {
