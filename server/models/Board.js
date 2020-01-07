@@ -4,10 +4,10 @@ let Schema = mongoose.Schema;
 let ObjectId = Schema.Types.ObjectId;
 
 const Board = new Schema({
-	title: {type: String, required: true},
-	description: {type: String, required: true},
-	authorId: {type: ObjectId, ref: 'User', required: true}
-}, {timestamps: true});
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  authorId: { type: ObjectId, ref: 'User', required: true }
+}, { timestamps: true });
 
 //CASCADE ON DELETE
 // _schema.pre('findOneAndRemove', function (next) {

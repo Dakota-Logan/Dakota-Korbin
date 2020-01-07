@@ -4,10 +4,10 @@ let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
 
 const List = new Schema({
-	title: {type: String, required: true},
-	authorId: {type: ObjectId, ref: 'User', required: true},
-	boardId: {type: ObjectId, ref: 'Board', required: true},
-}, {timestamps: true, toJSON: {virtuals: true}});
+  title: { type: String, required: true },
+  authorId: { type: ObjectId, ref: 'User', required: true },
+  boardId: { type: ObjectId, ref: 'Board', required: true },
+}, { timestamps: true, toJSON: { virtuals: true } });
 
 /*//CASCADE ON DELETE
 List.pre('deleteMany', function (next) {
