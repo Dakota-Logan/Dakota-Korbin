@@ -8,7 +8,7 @@ export default class CommentsController {
   constructor() {
     this.router = express.Router()
       .use(Authorize.authenticated)
-      .get('', this.getAll)
+      // .get('', this.getAll)
       .get('/:id', this.getById)
       .post('', this.create)
       .put('/:id', this.edit)
@@ -22,18 +22,18 @@ export default class CommentsController {
     next({ status: 404, message: 'No Such Route' })
   }
 
-  async getAll(req, res, next) {
-    try {
-      //only gets comments by user who is logged in
-      let data = await _commentService.getAll(req.session.uid)
-      return res.send(data)
-    }
-    catch (err) { next(err) }
-  }
+  // async getAll(req, res, next) {
+  //   try {
+  //     //only gets comments by user who is logged in
+  //     let data = await _commentService.getAll(req.session.uid)
+  //     return res.send(data)
+  //   }
+  //   catch (err) { next(err) }
+  // }
 
   async getById(req, res, next) {
     try {
-      let data = await _commentService.getById(req.params.id, req.session.uid)
+      let data = await _commentService.getById(req.body.id, req.session.uid)
       return res.send(data)
     } catch (error) { next(error) }
   }
@@ -48,14 +48,14 @@ export default class CommentsController {
 
   async edit(req, res, next) {
     try {
-      let data = await _commentService.edit(req.params.id, req.session.uid, req.body)
+      let data = await _commentService.edit(req.body.id, req.session.uid, req.body)
       return res.send(data)
     } catch (error) { next(error) }
   }
 
   async delete(req, res, next) {
     try {
-      await _commentService.delete(req.params.id, req.session.uid)
+      await _commentService.delete(req.body.id, req.session.uid)
       return res.send("Successfully deleted")
     } catch (error) { next(error) }
   }
