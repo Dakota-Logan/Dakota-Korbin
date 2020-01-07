@@ -5,6 +5,9 @@ import ApiError from "../utils/ApiError"
 const _repository = mongoose.model('Task', Task)
 
 class TaskService {
+  getTasksByListId(listId, uid) {
+    throw new Error("Method not implemented.")
+  }
   async getAll(userId) {
     return await _repository.find({ authorId: userId })
   }

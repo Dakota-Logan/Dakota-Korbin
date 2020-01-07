@@ -1,6 +1,7 @@
 import _taskService from '../services/TaskService'
 import express from 'express'
 import { Authorize } from '../middleware/authorize.js'
+import _commentService from "../services/CommentService"
 
 
 //PUBLIC
@@ -8,7 +9,7 @@ export default class TasksController {
   constructor() {
     this.router = express.Router()
       .use(Authorize.authenticated)
-      // .get('', this.getAll)
+      .get('', this.getAll)
       .get('/:id', this.getById)
       .post('', this.create)
       .put('/:id', this.edit)
@@ -22,20 +23,28 @@ export default class TasksController {
     next({ status: 404, message: 'No Such Route' })
   }
 
-  // async getAll(req, res, next) {
-  //   try {
-  //     //only gets tasks by user who is logged in
-  //     let data = await _taskService.getAll(req.session.uid)
-  //     return res.send(data)
-  //   }
-  //   catch (err) { next(err) }
-  // }
+  async getAll(req, res, next) {
+    try {
+      //only gets tasks by user who is logged in
+      let data = await _taskService.getAll(req.session.uid)
+      return res.send(data)
+    }
+    catch (err) { next(err) }
+  }
 
   async getById(req, res, next) {
     try {
       let data = await _taskService.getById(req.body.id, req.session.uid)
       return res.send(data)
     } catch (error) { next(error) }
+  }
+
+  async getCommentsByTaskId(req, res, next) {
+    try {
+      let data = await _commentService.getCommentsByTaskId(req.body.taskId, req.session.uid)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async create(req, res, next) {
