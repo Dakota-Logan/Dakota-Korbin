@@ -1,20 +1,44 @@
 <template>
-	<div class="board">{{board.title}}</div>
+	<div class="board">
+		<header>
+			<router-link to="/"><h2>Kanban</h2></router-link>
+		</header>
+		<main>
+			<h3>This is your board you dumb fuck.</h3>
+			{{board}}
+			<h1>{{board.title}}</h1>
+			<div id="lists">
+				<list-compenent v-for="list in lists"></list-compenent>
+			</div>
+		</main>
+	
+	</div>
 </template>
 
 <script>
 	export default {
 		name: "board",
+		mounted () {
+			this.$store.dispatch ('getOne', {
+				address: 'boards',
+				commit: 'setOne',
+				commitAddress: 'activeBoard',
+				id: this.$route.params.boardId
+			})
+			this.$store.dispatch ('getAll', 'lists');
+			this.$store.dispatch ('getAll', 'tasks');
+			setInterval(this.$store.dispatch ('getAll', 'comments'));
+		},
 		computed: {
-			board() {
-				return (
-				//FIXME This does not work on page reload because the boards array is empty in the store
-				this.$store.state.boards.find(b => b._id == this.boardId) || {
-					title: "Loading..."
-				}
-				);
+			board () {
+				return this.$store.state.activeBoard;
+			},
+			lists () {
+				return (this.$store.state.lists);
+			},
+			tasks () {
+				return (this.$store.state.tasks);
 			}
 		},
-		props: ["boardId"]
 	};
 </script>
