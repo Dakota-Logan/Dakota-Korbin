@@ -69,7 +69,6 @@ export default class BoardsController {
     }
   }
 
-
   async create(req, res, next) {
     try {
       req.body.authorId = req.session.uid
