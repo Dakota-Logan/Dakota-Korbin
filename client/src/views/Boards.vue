@@ -16,7 +16,7 @@
 	export default {
 		name: "boards",
 		mounted() {
-			this.$store.dispatch("getAll", 'boards');
+			this.$store.dispatch("getAll", {address: 'boards'});
 		},
 		data() {
 			return {
