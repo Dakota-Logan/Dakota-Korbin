@@ -16,8 +16,8 @@ class CommentService {
     }
     return data
   }
-  async getCommentsByTaskId(taskId, uid) {
-    let data = await _repository.find({ taskId, authorId: uid })
+  async getCommentsByBoardId(boardId, uid) {
+    let data = await _repository.find({ boardId, authorId: uid })
   }
 
   async create(rawData) {

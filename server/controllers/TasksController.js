@@ -39,13 +39,6 @@ export default class TasksController {
     } catch (error) { next(error) }
   }
 
-  async getCommentsByTaskId(req, res, next) {
-    try {
-      let data = await _commentService.getCommentsByTaskId(req.body.taskId, req.session.uid)
-    } catch (error) {
-      next
-    }
-  }
 
   async create(req, res, next) {
     try {
