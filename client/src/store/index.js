@@ -25,6 +25,10 @@ export default new Vuex.Store ({
 		activeBoard: {}
 	},
 	mutations: {
+		setUser(state, user) {
+			state.user = user
+		},
+		
 		setAll (state, payload) {
 			state[payload.address] = payload.data;
 		},
@@ -35,6 +39,7 @@ export default new Vuex.Store ({
 		
 		addOne (state, payload) {
 			state[payload.address].push (payload.data);
+			console.log (state[payload.address])
 		},
 		
 		removeOne (state, payload) {
@@ -86,23 +91,27 @@ export default new Vuex.Store ({
 		},
 		//#endregion
 		
-		getAll ({commit}, address) {
+		getAll ({commit}, payload) {
+			let address = `${payload.address}`;
+			if(payload.id){
+				address = `${payload.address}/${payload.id}`
+			}
 			api
 			.get ('' + address)
 			.then (res =>
 			commit ('setAll', {
-				address: `${address}`,
+				address: `${payload.address}`,
 				data: res.data
 			})
 			)
 			.catch (e => console.error (e, e.message));
 		},
 		
-		getOne ({dispatch}, payload) {
+		getOne ({commit}, payload) {
 			api
 			.get ('' + payload.address+'/'+payload.id)
 			.then (res => {
-				dispatch('getAll', `${payload.address}`)
+				commit (payload.commit, {address: payload.commitAddress, data: res.data})
 			})
 			.catch (e => console.error (e, e.message));
 		},
@@ -112,7 +121,7 @@ export default new Vuex.Store ({
 			.post ('' + payload.address, payload.data)
 			.then (res => {
 				commit (payload.commit, {
-					address: `${address}`,
+					address: payload.address,
 					data: res.data
 				})
 			})
