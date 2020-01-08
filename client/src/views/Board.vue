@@ -43,6 +43,11 @@
 		components: {
 			List
 		},
+		data () {
+			return {
+			
+			}
+		},
 		computed: {
 			board () {
 				return this.$store.state.activeBoard;

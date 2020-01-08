@@ -16,7 +16,11 @@
 	export default {
 		name: "boards",
 		mounted() {
-			this.$store.dispatch("getAll", {address: 'boards'});
+			this.$store.dispatch("getAll", {
+				address: 'boards',
+				commit: 'setAll',
+				commitAddress: 'boards'
+			});
 		},
 		data() {
 			return {
@@ -33,7 +37,12 @@
 		},
 		methods: {
 			addBoard() {
-				this.$store.dispatch("create", {address: 'boards', commit: 'addOne', data: this.newBoard});
+				this.$store.dispatch("create", {
+					address: 'boards',
+					commit: 'addOne',
+					commitAddress: 'boards',
+					data: this.newBoard
+				});
 				this.newBoard = {title: "", description: ""};
 			},
 			moveBoard(id){
