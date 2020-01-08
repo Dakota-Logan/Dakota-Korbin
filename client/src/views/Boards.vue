@@ -13,33 +13,42 @@
 </template>
 
 <script>
-	export default {
-		name: "boards",
-		mounted() {
-			this.$store.dispatch("getAll", {address: 'boards'});
-		},
-		data() {
-			return {
-				newBoard: {
-					title: "",
-					description: ""
-				}
-			};
-		},
-		computed: {
-			boards() {
-				return this.$store.state.boards;
-			}
-		},
-		methods: {
-			addBoard() {
-				this.$store.dispatch("create", {address: 'boards', commit: 'addOne', data: this.newBoard});
-				this.newBoard = {title: "", description: ""};
-			},
-			moveBoard(id){
-				this.$store.state.activeBoard = this.$store.state.find(cur=> cur._id==id)
-			}
-		}
-	};
-
+export default {
+  name: "boards",
+  mounted() {
+    this.$store.dispatch("getAll", {
+      address: "boards",
+      commit: "setAll",
+      commitAddress: "boards"
+    });
+  },
+  data() {
+    return {
+      newBoard: {
+        title: "",
+        description: ""
+      }
+    };
+  },
+  computed: {
+    boards() {
+      return this.$store.state.boards;
+    }
+  },
+  methods: {
+    addBoard() {
+      this.$store.dispatch("create", {
+        address: "boards",
+        commit: "addOne",
+        data: this.newBoard
+      });
+      this.newBoard = { title: "", description: "" };
+    },
+    moveBoard(id) {
+      this.$store.state.activeBoard = this.$store.state.find(
+        cur => cur._id == id
+      );
+    }
+  }
+};
 </script>
