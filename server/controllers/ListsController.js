@@ -1,6 +1,6 @@
 import _listService from '../services/ListService'
 import express from 'express'
-import { Authorize } from '../middleware/authorize.js'
+import {Authorize} from '../middleware/authorize.js'
 import _taskService from "../services/TaskService"
 
 
