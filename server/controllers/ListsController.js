@@ -1,6 +1,6 @@
 import _listService from '../services/ListService'
 import express from 'express'
-import {Authorize} from '../middleware/authorize.js'
+import { Authorize } from '../middleware/authorize.js'
 import _taskService from "../services/TaskService"
 
 
@@ -39,13 +39,6 @@ export default class ListsController {
     } catch (error) { next(error) }
   }
 
-  async getTasksByListId(req, res, next) {
-    try {
-      let data = await _taskService.getTasksByListId(req.body.listId, req.session.uid)
-    } catch (error) {
-
-    }
-  }
 
   async create(req, res, next) {
     try {
