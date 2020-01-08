@@ -22,48 +22,49 @@
 <script>
 import List from "../components/List";
 import FormModal from "../components/FormModal.vue";
-
-export default {
-  name: "board",
-  mounted() {
-    this.$store.dispatch("getOne", {
-      address: "boards",
-      commit: "setOne",
-      commitAddress: "activeBoard",
-      id: this.$route.params.boardId
-    });
-    this.$store.dispatch("getAll", {
-      address: `boards/${this.$route.params.boardId}/lists`,
-      commitAddress: "lists"
-    });
-    this.$store.dispatch("getAll", {
-      address: `boards/${this.$route.params.boardId}/tasks`,
-      commitAddress: "tasks"
-    });
-    setTimeout(
-      this.$store.dispatch("getAll", {
-        address: `boards/${this.$route.params.boardId}/comments`,
-        commitAddress: "comments"
-      }),
-      1000
-    );
-  },
-  components: {
-    List,
-    FormModal
-  },
-  computed: {
-    board() {
-      return this.$store.state.activeBoard;
-    },
-    lists() {
-      return this.$store.state.lists;
-    },
-    tasks() {
-      return this.$store.state.tasks;
-    }
-  }
-};
+	
+	export default {
+		name: "board",
+		mounted () {
+			this.$store.dispatch ('getOne', {
+				address: 'boards',
+				commit: 'setOne',
+				commitAddress: 'activeBoard',
+				id: this.$route.params.boardId
+			});
+			this.$store.dispatch ('getAll', {
+				address: `boards/${this.$route.params.boardId}/lists`,
+				commitAddress: 'lists'
+			});
+			this.$store.dispatch ('getAll', {
+				address: `boards/${this.$route.params.boardId}/tasks`,
+				commitAddress: 'tasks'
+			});
+			setTimeout (this.$store.dispatch ('getAll', {
+				address: `boards/${this.$route.params.boardId}/comments`,
+				commitAddress: 'comments'
+			}), 1000);
+		},
+		components: {
+			List
+		},
+		data () {
+			return {
+			
+			}
+		},
+		computed: {
+			board () {
+				return this.$store.state.activeBoard;
+			},
+			lists () {
+				return (this.$store.state.lists);
+			},
+			tasks () {
+				return (this.$store.state.tasks);
+			}
+		},
+	}
 </script>
 
 <style>
