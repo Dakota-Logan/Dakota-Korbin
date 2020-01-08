@@ -17,6 +17,14 @@ class ListService {
     return data
   }
 
+  async getListsByBoardId(boardId, uid) {
+    let data = await _repository.find({ boardId, authorId: uid })
+    if (!data) {
+      throw new ApiError("Invalid ID or you do not own this list", 400)
+    }
+    return data
+  }
+
   async create(rawData) {
     let data = await _repository.create(rawData)
     return data

@@ -42,3 +42,19 @@
 		},
 	};
 </script>
+
+export default {
+  name: "",
+  mounted() {
+    
+  },
+  methods: {
+
+  },
+  computed: {
+
+  },
+  components: {
+
+  }
+};
