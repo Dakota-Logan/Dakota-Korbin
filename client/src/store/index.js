@@ -49,8 +49,7 @@ export default new Vuex.Store ({
 				boards: [],
 				activeBoard: {}
 			}
-		},
-		
+		}
 	},
 	actions: {
 		//#region -- AUTH STUFF --
@@ -99,14 +98,11 @@ export default new Vuex.Store ({
 			.catch (e => console.error (e, e.message));
 		},
 		
-		getOne ({commit}, payload) {
+		getOne ({dispatch}, payload) {
 			api
-			.get ('' + payload.address)
+			.get ('' + payload.address+'/'+payload.id)
 			.then (res => {
-				commit (payload.commit, {
-					address: `${address}`,
-					data: res.data
-				})
+				dispatch('getAll', `${payload.address}`)
 			})
 			.catch (e => console.error (e, e.message));
 		},
@@ -125,7 +121,7 @@ export default new Vuex.Store ({
 		
 		edit ({commit}, payload) {
 			api
-			.put ('' + payload.address, payload.data)
+			.put ('' + payload.address+'/'+payload.id, payload.data)
 			.then (res => commit (payload.commit, {
 				address: payload.address,
 				data: res.data
