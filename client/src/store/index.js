@@ -52,7 +52,16 @@ export default new Vuex.Store ({
 			state = {
 				user: {},
 				boards: [],
-				activeBoard: {}
+				activeBoard: {},
+				modalObj: {
+					addComment: false,
+					editComment: false,
+					addList: false,
+					editList: false,
+					addTask: false,
+					editTask: false,
+					
+				}
 			}
 		}
 	},
@@ -147,4 +156,3 @@ export default new Vuex.Store ({
 		}
 	}
 })
-
