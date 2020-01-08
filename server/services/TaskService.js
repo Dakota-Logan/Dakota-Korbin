@@ -9,8 +9,15 @@ class TaskService {
     return await _repository.find({ authorId: userId })
   }
 
-  async getByListId(id, userId) {
+  async getById(id, userId) {
     let data = await _repository.find({ _id: id, authorId: userId })
+    if (!data) {
+      throw new ApiError("Invalid ID or you do not own this task", 400)
+    }
+    return data
+  }
+  async getTasksByListId(listId, uid) {
+    let data = await _repository.find({ listId, authorId: uid })
     if (!data) {
       throw new ApiError("Invalid ID or you do not own this task", 400)
     }

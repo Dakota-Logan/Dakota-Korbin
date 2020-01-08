@@ -5,9 +5,9 @@ import ApiError from "../utils/ApiError"
 const _repository = mongoose.model('Comment', Comment)
 
 class CommentService {
-  // async getAll(userId) {
-  //   return await _repository.find({ authorId: userId })
-  // }
+  async getAll(userId) {
+    return await _repository.find({ authorId: userId })
+  }
 
   async getById(id, userId) {
     let data = await _repository.find({ _id: id, authorId: userId })
@@ -15,6 +15,9 @@ class CommentService {
       throw new ApiError("Invalid ID or you do not own this comment", 400)
     }
     return data
+  }
+  async getCommentsByTaskId(taskId, uid) {
+    let data = await _repository.find({ taskId, authorId: uid })
   }
 
   async create(rawData) {
