@@ -2,15 +2,14 @@ import express from 'express'
 import cors from 'cors'
 import bp from 'body-parser'
 import DbContext from "./db/dbconfig"
-const server = express()
+const server = express();
 
 //Fire up database connection
-DbContext.connect()
+DbContext.connect();
 
 //Sets the port to Heroku's, and the files to the built project 
-var port = process.env.PORT || 3000
-server.use(express.static(__dirname + '/../client/dist'))
-
+var port = process.env.PORT || 3000;
+server.use(express.static(__dirname + '/../client/dist'));
 
 var whitelist = ['http://localhost:8080'];
 var corsOptions = {
@@ -37,8 +36,17 @@ server.use('/account', new UserController().router)
 
 //YOUR ROUTES HERE!!!!!!
 import BoardController from './controllers/BoardController'
+import ListController from "./controllers/ListsController"
+import TaskController from "./controllers/TasksController"
+import CommentController from "./controllers/CommentsController"
 
-server.use('/api/boards', new BoardController().router)
+
+
+server.use('/api/boards', new BoardController().router);
+server.use('/api/lists', new ListController().router);
+server.use('/api/tasks', new TaskController().router);
+server.use('/api/comments', new CommentController().router);
+// server.use('api/');
 
 
 
@@ -52,7 +60,7 @@ server.use('*', (req, res, next) => {
   res.status(404).send({
     error: 'No matching routes'
   })
-})
+});
 
 
 server.listen(port, () => {
