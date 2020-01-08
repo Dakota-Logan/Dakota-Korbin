@@ -1,22 +1,27 @@
 <template>
-	<div class="board">
-		<header>
-			<router-link to="/"><h3>Kanban</h3></router-link>
-		</header>
-		<main>
-			<p>This is your board you dumb fuck.</p>
-			<h1>{{board.title}}</h1>
-			<h3>{{board.description}}</h3>
-			<div id="lists">
-				<List v-for="list in lists" :id="list._id" :listData="list"></List>
-			</div>
-		</main>
-	
-	</div>
+  <div class="board">
+    <header>
+      <router-link to="/">
+        <h3>Kanban</h3>
+      </router-link>
+    </header>
+    <main>
+      <p>This is your board you dumb fuck.</p>
+      <h1>{{board.title}}</h1>
+      <h3>{{board.description}}</h3>
+      <div id="lists">
+        <List v-for="list in lists" :id="list._id" :listData="list"></List>
+      </div>
+      <div>
+        <form-modal />
+      </div>
+    </main>
+  </div>
 </template>
 
 <script>
-	import List from '../components/List'
+import List from "../components/List";
+import FormModal from "../components/FormModal.vue";
 	
 	export default {
 		name: "board",
@@ -63,8 +68,8 @@
 </script>
 
 <style>
-	#lists{
-		display: flex;
-		flex-wrap: wrap;
-	}
+#lists {
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>
