@@ -92,19 +92,15 @@ export default new Vuex.Store ({
 		//#endregion
 		
 		getAll ({commit}, payload) {
-			let address = `${payload.address}`;
-			if(payload.id){
-				address = `${payload.address}/${payload.id}`
-			}
 			api
-			.get ('' + address)
+			.get ('' + payload.address)
 			.then (res =>
 			commit ('setAll', {
-				address: `${payload.address}`,
+				address: `${payload.commitAddress}`,
 				data: res.data
 			})
 			)
-			.catch (e => console.error (e, e.message));
+			.catch (e => console.error (e));
 		},
 		
 		getOne ({commit}, payload) {
@@ -151,3 +147,4 @@ export default new Vuex.Store ({
 		}
 	}
 })
+

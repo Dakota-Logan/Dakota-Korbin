@@ -1,14 +1,14 @@
 <template>
 	<div class="board">
 		<header>
-			<router-link to="/"><h2>Kanban</h2></router-link>
+			<router-link to="/"><h3>Kanban</h3></router-link>
 		</header>
 		<main>
-			<h3>This is your board you dumb fuck.</h3>
-			{{board}}
+			<p>This is your board you dumb fuck.</p>
 			<h1>{{board.title}}</h1>
+			<h3>{{board.description}}</h3>
 			<div id="lists">
-				<list-compenent v-for="list in lists"></list-compenent>
+				<List v-for="list in lists" :id="list._id" :listData="list"></List>
 			</div>
 		</main>
 	
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+	import List from '../components/List'
+	
 	export default {
 		name: "board",
 		mounted () {
@@ -24,10 +26,22 @@
 				commit: 'setOne',
 				commitAddress: 'activeBoard',
 				id: this.$route.params.boardId
-			})
-			this.$store.dispatch ('getAll', 'lists');
-			this.$store.dispatch ('getAll', 'tasks');
-			setInterval(this.$store.dispatch ('getAll', 'comments'));
+			});
+			this.$store.dispatch ('getAll', {
+				address: `boards/${this.$route.params.boardId}/lists`,
+				commitAddress: 'lists'
+			});
+			this.$store.dispatch ('getAll', {
+				address: `boards/${this.$route.params.boardId}/tasks`,
+				commitAddress: 'tasks'
+			});
+			setTimeout (this.$store.dispatch ('getAll', {
+				address: `boards/${this.$route.params.boardId}/comments`,
+				commitAddress: 'comments'
+			}), 1000);
+		},
+		components: {
+			List
 		},
 		computed: {
 			board () {
@@ -40,21 +54,12 @@
 				return (this.$store.state.tasks);
 			}
 		},
-	};
+	}
 </script>
 
-export default {
-  name: "",
-  mounted() {
-    
-  },
-  methods: {
-
-  },
-  computed: {
-
-  },
-  components: {
-
-  }
-};
+<style>
+	#lists{
+		display: flex;
+		flex-wrap: wrap;
+	}
+</style>
