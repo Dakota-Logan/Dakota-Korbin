@@ -7,6 +7,7 @@ const Task = new Schema({
   title: { type: String, required: true },
   description: { type: String },
   authorId: { type: ObjectId, ref: 'User', required: true },
+  boardId: { type: ObjectId, ref: 'Board', required: true },
   listId: { type: ObjectId, ref: 'List', required: true },
 }, { timestamps: true });
 
