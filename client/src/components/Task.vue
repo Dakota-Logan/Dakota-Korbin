@@ -12,10 +12,8 @@ import CommentComponent from "../components/Comment.vue";
 export default {
   name: "Task",
   props: ["taskData"],
-  mounted() {
-    this.$store.dispatch("getComments", this.taskData._id);
-    // change this
-  },
+  // mounted() {
+  // },
   computed: {},
   methods: {},
   components: {

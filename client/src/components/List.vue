@@ -22,14 +22,14 @@ import TaskComponent from "../components/Task.vue";
 export default {
   name: "List",
   props: ["listData"],
-  mounted() {
-    // this.$store.dispatch("getAll", {
-    //   address: "lists",
-    //   commit: "",
-    //   id:
-    // });
-    // gonna need to change that
-  },
+  // mounted() {
+  //   // this.$store.dispatch("getAll", {
+  //   //   address: "lists",
+  //   //   commit: "",
+  //   //   id:
+  //   // });
+  //   // gonna need to change that
+  // },
   methods: {},
   components: {
     TaskComponent
