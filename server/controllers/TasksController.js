@@ -43,7 +43,7 @@ export default class TasksController {
     try {
       let data = await _commentService.getCommentsByTaskId(req.body.taskId, req.session.uid)
     } catch (error) {
-      next(error)
+      next
     }
   }
 
@@ -57,7 +57,7 @@ export default class TasksController {
 
   async edit(req, res, next) {
     try {
-      let data = await _taskService.edit(req.body.id, req.session.uid, req.body)
+      let data = await _taskService.edit(req.body.id, req.body, req.session.uid)
       return res.send(data)
     } catch (error) { next(error) }
   }
