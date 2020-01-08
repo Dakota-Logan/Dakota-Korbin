@@ -1,10 +1,10 @@
 import mongoose from "mongoose"
-import List from "../models/List"
+import Task from "../models/Task"
 import ApiError from "../utils/ApiError"
 
-const _repository = mongoose.model('List', List)
+const _repository = mongoose.model('Task', Task)
 
-class ListService {
+class TaskService {
   async getAll(userId) {
     return await _repository.find({ authorId: userId })
   }
@@ -12,15 +12,14 @@ class ListService {
   async getById(id, userId) {
     let data = await _repository.find({ _id: id, authorId: userId })
     if (!data) {
-      throw new ApiError("Invalid ID or you do not own this list", 400)
+      throw new ApiError("Invalid ID or you do not own this task", 400)
     }
     return data
   }
-
-  async getListsByBoardId(boardId, uid) {
+  async getTasksByBoardId(boardId, uid) {
     let data = await _repository.find({ boardId, authorId: uid })
     if (!data) {
-      throw new ApiError("Invalid ID or you do not own this list", 400)
+      throw new ApiError("Invalid ID or you do not own this task", 400)
     }
     return data
   }
@@ -33,7 +32,7 @@ class ListService {
   async edit(id, userId, update) {
     let data = await _repository.findOneAndUpdate({ _id: id, authorId: userId }, update, { new: true })
     if (!data) {
-      throw new ApiError("Invalid ID or you do not own this list", 400);
+      throw new ApiError("Invalid ID or you do not own this task", 400);
     }
     return data;
   }
@@ -41,12 +40,12 @@ class ListService {
   async delete(id, userId) {
     let data = await _repository.findOneAndRemove({ _id: id, authorId: userId });
     if (!data) {
-      throw new ApiError("Invalid ID or you do not own this list", 400);
+      throw new ApiError("Invalid ID or you do not own this task", 400);
     }
   }
 
 }
 
 
-const _listService = new ListService()
-export default _listService
+const _taskService = new TaskService()
+export default _taskService

@@ -14,9 +14,9 @@ store.on("error", function (err) {
 export default class Session {
     constructor() {
         this.express = expressSession({
-            secret: "you should change this", //CHANGE ME!!!!
+            secret: "change me", //CHANGE ME!!!!
             cookie: {
-                maxAge: 1000 * 60 * 60 * 24 * 7 * 52 * 2,
+                maxAge: 1000 * 60 * 60 * 24 * 7 * 52,
             },
             store,
             resave: true,

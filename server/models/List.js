@@ -1,14 +1,15 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
+
 let Schema = mongoose.Schema
 let ObjectId = Schema.Types.ObjectId
 
 const List = new Schema({
   title: { type: String, required: true },
   authorId: { type: ObjectId, ref: 'User', required: true },
-  boardId: { type: ObjectId, ref: 'Board', required: true }
-}, { timestamps: true, toJSON: { virtuals: true } })
+  boardId: { type: ObjectId, ref: 'Board', required: true },
+}, { timestamps: true, toJSON: { virtuals: true } });
 
-//CASCADE ON DELETE
+/*//CASCADE ON DELETE
 List.pre('deleteMany', function (next) {
   //lets find all the lists and remove them
   Promise.all([
@@ -16,9 +17,9 @@ List.pre('deleteMany', function (next) {
   ])
     .then(() => next())
     .catch(err => next(err))
-})
+})*/
 
-//CASCADE ON DELETE
+/*//CASCADE ON DELETE
 List.pre('findOneAndRemove', function (next) {
   //lets find all the lists and remove them
   Promise.all([
@@ -26,6 +27,6 @@ List.pre('findOneAndRemove', function (next) {
   ])
     .then(() => next())
     .catch(err => next(err))
-})
+})*/
 
-export default List
+export default List;
