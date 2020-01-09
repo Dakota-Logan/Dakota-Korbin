@@ -1,13 +1,15 @@
 <template>
-	<div class="board">
+	<div id="board">
 		<header>
 			<router-link to="/">
-				<h3>Kanban</h3>
+				<h3 id="home-link">Kanban</h3>
 			</router-link>
 		</header>
 		<main>
 			<FormModal/> <!--Add list-->
-			<button type="button" data-toggle="modal" data-target="#FormModal" @click="modalAddList">Add List</button>
+			<button class="btn btn-dark" type="button" data-toggle="modal" data-target="#FormModal"
+			        @click="modalAddList">Add
+				List</button>
 			<p>This is your board you dumb fuck.</p>
 			<h1>{{board.title}}</h1>
 			<h3>{{board.description}}</h3>
@@ -49,9 +51,7 @@
 			FormModal
 		},
 		data () {
-			return {
-				showModalDialog: false
-			}
+			return {}
 		},
 		computed: {
 			board () {
@@ -73,17 +73,37 @@
 </script>
 
 <style>
+	#board {
+		min-height: 100vh;
+		
+		/*background-color: rgb(51, 0, 59);*/
+		background-image: url('../assets/mountains-backdrop.jpg');
+		background-repeat: no-repeat;
+		background-size: cover;
+		color: white;
+		text-shadow: 2px 2px gray;
+	}
+	
+	#home-link {
+		text-shadow: 1px 1px black;
+	}
+	
 	#lists {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 	}
-	.list {`
+	
+	.list {
 		margin: .5rem .75rem;
 		padding: .5rem .5rem;
 		
 		width: 20vw;
 		min-height: 60vh;
-		border: 2px solid black;
+		border: 1px solid black;
+	}
+	
+	.btn {
+		filter: drop-shadow(2px 2px rgb(204, 0, 79));
 	}
 </style>

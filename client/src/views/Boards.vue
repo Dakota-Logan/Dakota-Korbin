@@ -53,3 +53,11 @@
 	};
 
 </script>
+
+<style>
+	.boards {
+		min-height: 100vh;
+		
+		background-image: url('../assets/mountains-backdrop.jpg');
+	}
+</style>
