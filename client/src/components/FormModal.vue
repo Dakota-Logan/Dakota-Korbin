@@ -55,6 +55,8 @@
 		},
 		methods: {
 			createList () {
+				document.getElementById('FormModal').on('hidden.bs.modal', console.log('working'))
+				
 				let newList = {...this.newList};
 				this.$store.dispatch ("create", {
 					address: "lists",

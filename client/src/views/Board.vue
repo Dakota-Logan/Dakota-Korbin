@@ -76,7 +76,10 @@ export default {
   },
   methods: {
     modalAddList() {
-      this.$store.state.modalObj.addList = true;
+      this.$store.commit("setModalType", {
+        address: "addList",
+        data: true
+      });
     }
   }
 };

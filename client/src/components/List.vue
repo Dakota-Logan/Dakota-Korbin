@@ -1,7 +1,12 @@
 <template>
 	<div class="list">
 		<header>
+			<div></div>
 			<h3>{{listData.title}}</h3>
+			<button class="btn btn-dark" type="button" data-toggle="modal" data-target="#FormModal"
+			        @click="modalAddTask">Add
+				Task
+			</button>
 		</header>
 		<main>
 			<task-component v-for="task in tasks" :taskData="task" :id="task._id"/>
@@ -23,7 +28,11 @@
 				return this.$store.state.tasks.filter (cur => cur.listId === listData._id)
 			}
 		},
-		methods: {}
+		methods: {
+			modalAddTask () {
+				this.$store.commit ('setModalType', {address: 'addTask', data: true})
+			}
+		}
 	};
 </script>
 
@@ -34,9 +43,18 @@
 		
 	}
 	
-	h3 {
+	header {
 		width: 100%;
+		
 		border-bottom: 1px solid black;
+	}
+	
+	header button {
+		margin: 1%;
+		
+		position: absolute;
+		top: 0;
+		right: 0;
 	}
 
 </style>
