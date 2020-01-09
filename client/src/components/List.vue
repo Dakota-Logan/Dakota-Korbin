@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="list">
 		<h3>{{listData.title}}</h3>
 		<task-component v-for="task in tasks" :taskData="task" :id="task._id"/>
 	</div>
@@ -24,4 +24,10 @@
 </script>
 
 <style scoped>
+	
+	h3 {
+		width: 100%;
+		border-bottom: 1px solid black;
+	}
+	
 </style>

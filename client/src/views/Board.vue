@@ -1,27 +1,26 @@
 <template>
-  <div class="board">
-    <header>
-      <router-link to="/">
-        <h3>Kanban</h3>
-      </router-link>
-    </header>
-    <main>
-      <p>This is your board you dumb fuck.</p>
-      <h1>{{board.title}}</h1>
-      <h3>{{board.description}}</h3>
-      <div id="lists">
-        <List v-for="list in lists" :id="list._id" :listData="list"></List>
-      </div>
-      <div>
-        <form-modal />
-      </div>
-    </main>
-  </div>
+	<div class="board">
+		<header>
+			<router-link to="/">
+				<h3>Kanban</h3>
+			</router-link>
+		</header>
+		<main>
+			<FormModal/> <!--Add list-->
+			<button type="button" data-toggle="modal" data-target="#FormModal" @click="modalAddList">Add List</button>
+			<p>This is your board you dumb fuck.</p>
+			<h1>{{board.title}}</h1>
+			<h3>{{board.description}}</h3>
+			<div id="lists">
+				<List v-for="list in lists" :id="list._id" :listData="list"></List>
+			</div>
+		</main>
+	</div>
 </template>
 
 <script>
-import List from "../components/List";
-import FormModal from "../components/FormModal.vue";
+	import List from "../components/List";
+	import FormModal from "../components/FormModal.vue";
 	
 	export default {
 		name: "board",
@@ -40,17 +39,18 @@ import FormModal from "../components/FormModal.vue";
 				address: `boards/${this.$route.params.boardId}/tasks`,
 				commitAddress: 'tasks'
 			});
-			setTimeout (this.$store.dispatch ('getAll', {
-				address: `boards/${this.$route.params.boardId}/comments`,
-				commitAddress: 'comments'
-			}), 1000);
+			// setTimeout (this.$store.dispatch ('getAll', {
+			// 	address: `boards/${this.$route.params.boardId}/comments`,
+			// 	commitAddress: 'comments'
+			// }), 1000);
 		},
 		components: {
-			List
+			List,
+			FormModal
 		},
 		data () {
 			return {
-			
+				showModalDialog: false
 			}
 		},
 		computed: {
@@ -64,12 +64,26 @@ import FormModal from "../components/FormModal.vue";
 				return (this.$store.state.tasks);
 			}
 		},
+		methods: {
+			modalAddList () {
+				this.$store.state.modalObj.addList = true;
+			}
+		}
 	}
 </script>
 
 <style>
-#lists {
-  display: flex;
-  flex-wrap: wrap;
-}
+	#lists {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+	}
+	.list {`
+		margin: .5rem .75rem;
+		padding: .5rem .5rem;
+		
+		width: 20vw;
+		min-height: 60vh;
+		border: 2px solid black;
+	}
 </style>
