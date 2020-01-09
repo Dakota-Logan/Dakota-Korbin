@@ -77,13 +77,6 @@ export default {
   methods: {
     modalAddList() {
       this.$store.state.modalObj.addList = true;
-    },
-    changeList() {
-      this.$store.dipatch("edit", {
-        address: "lists",
-        commit: "setOne",
-        data: this.list
-      });
     }
   }
 };
