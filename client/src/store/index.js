@@ -75,6 +75,15 @@ export default new Vuex.Store ({
 		},
 		
 		setModalType (state, payload) {
+			// console.log(state.modalObj);
+			state.modalObj.forEach (cur => {
+			console.log('Before: '+cur);
+				if(cur==true) {
+					getKeyByValue(state.modalObj, )
+				}
+			console.log('After: '+cur);
+			});
+			// console.log(state.modalObj);
 			state.modalObj[payload.address] = payload.data
 		}
 	},
@@ -149,10 +158,15 @@ export default new Vuex.Store ({
 		edit ({commit}, payload) {
 			api
 			.put ('' + payload.address + '/' + payload.id, payload.data)
-			.then (res => commit (payload.commit, {
-				address: payload.address,
-				data: res.data
-			}))
+			.then (res => {
+				commit (payload.commit, {
+					address: payload.address, data: res.data
+			});
+			
+			if(payload.commit2) {
+				//#todo finish 2nd commit for add/remove task function :)
+				commit ()
+			}})
 			.catch (e => console.error (e));
 		},
 		
@@ -167,11 +181,27 @@ export default new Vuex.Store ({
 			})
 			.catch (e => console.error (e, e.message));
 		},
-		
-		//# Extras
-		setModalType ({commit}, payload) {
-			commit ('setModalType', payload);
-		}
-		//#Extras - end
 	}
 })
+
+
+// Object-forEach Polyfill - :)
+if (!Object.prototype.forEach) {
+	Object.defineProperty (Object.prototype, 'forEach', {
+		value: function (callback, thisArg) {
+			if (this == null) {
+				throw new TypeError ('Not an object');
+			}
+			thisArg = thisArg || window;
+			for (var key in this) {
+				if (this.hasOwnProperty (key)) {
+					callback.call (thisArg, this[key], key, this);
+				}
+			}
+		}
+	});
+}
+// Object-indexOf Polyfill - :)
+function getKeyByValue(object, value) {
+	return Object.keys(object).find(key => object[key] === value);
+}
