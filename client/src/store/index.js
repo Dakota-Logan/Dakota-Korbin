@@ -7,7 +7,7 @@ import AuthService from '../AuthService'
 Vue.use (Vuex);
 
 //Allows axios to work locally or live
-let base = window.location.host.includes ('localhost:8080') ? '//localhost:3000/' : '/'
+let base = window.location.host.includes ('localhost:8080') ? '//localhost:3000/' : '/';
 
 let api = Axios.create ({
 	baseURL: base + "api/",
@@ -22,10 +22,19 @@ export default new Vuex.Store ({
 		lists: [],
 		tasks: [],
 		comments: [],
-		activeBoard: {}
+		activeBoard: {},
+		modalObj: {
+			addComment: false,
+			editComment: false,
+			addList: false,
+			editList: false,
+			addTask: false,
+			editTask: false,
+			
+		}
 	},
 	mutations: {
-		setUser(state, user) {
+		setUser (state, user) {
 			state.user = user
 		},
 		
@@ -62,7 +71,11 @@ export default new Vuex.Store ({
 					editTask: false,
 					
 				}
-			}
+			};
+		},
+		
+		setModalType (state, payload) {
+			state.modalObj[payload.address] = payload.data
 		}
 	},
 	actions: {
@@ -114,7 +127,7 @@ export default new Vuex.Store ({
 		
 		getOne ({commit}, payload) {
 			api
-			.get ('' + payload.address+'/'+payload.id)
+			.get ('' + payload.address + '/' + payload.id)
 			.then (res => {
 				commit (payload.commit, {address: payload.commitAddress, data: res.data})
 			})
@@ -135,7 +148,7 @@ export default new Vuex.Store ({
 		
 		edit ({commit}, payload) {
 			api
-			.put ('' + payload.address+'/'+payload.id, payload.data)
+			.put ('' + payload.address + '/' + payload.id, payload.data)
 			.then (res => commit (payload.commit, {
 				address: payload.address,
 				data: res.data
@@ -153,6 +166,12 @@ export default new Vuex.Store ({
 				})
 			})
 			.catch (e => console.error (e, e.message));
+		},
+		
+		//# Extras
+		setModalType ({commit}, payload) {
+			commit ('setModalType', payload);
 		}
+		//#Extras - end
 	}
 })

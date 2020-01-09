@@ -52,20 +52,22 @@ export default class BoardsController {
       next(error)
     }
   }
-
+	//DON'T forget to res.send or else your request will die. Blame: Korbin
   async getTasksByBoardId(req, res, next) {
     try {
       let data = await _taskService.getTasksByBoardId(req.params.id, req.session.uid)
+	    return res.status(200).send(data);
     } catch (error) {
-
+		next(error)
     }
   }
 
   async getCommentsByBoardId(req, res, next) {
     try {
       let data = await _commentService.getCommentsByBoardId(req.params.id, req.session.uid)
+	    return res.status(200).send(data);
     } catch (error) {
-      next
+      next(error)
     }
   }
 
