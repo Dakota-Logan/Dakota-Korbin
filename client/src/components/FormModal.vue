@@ -8,15 +8,23 @@
 		</div>
 		<div class="task col" v-if="this.$store.state.modalObj.addTask">
 			<form @submit="createTask">
-				<input required type="text" v-model="newTask.title" placeholder="title"/>
-				<input type="text" v-model="newTask.description" placeholder="description"/>
+				<label>
+					<input required type="text" v-model="newTask.title" placeholder="title"/>
+				</label>
+				<label>
+					<input type="text" v-model="newTask.description" placeholder="description"/>
+				</label>
 				<button class="btn btn-success">Create Task</button>
 			</form>
 		</div>
 		<div class="comment col" v-if="this.$store.state.modalObj.addComment">
 			<form @submit="createComment">
-				<input required type="text" v-model="newComment.body" placeholder="comment"/>
-				<input required type="text" v-model="newComment.taskId" placeholder="title"/>
+				<label>
+					<input required type="text" v-model="newComment.body" placeholder="comment"/>
+				</label>
+				<label>
+					<input required type="text" v-model="newComment.taskId" placeholder="title"/>
+				</label>
 				<button class="btn btn-success">Create Comment</button>
 			</form>
 		</div>

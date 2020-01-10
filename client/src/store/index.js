@@ -21,7 +21,7 @@ export default new Vuex.Store ({
 		boards: [],
 		lists: [],
 		tasks: [],
-		activeTask: [],
+		activeTask: {},
 		comments: [],
 		activeBoard: {},
 		modalObj: {
@@ -54,7 +54,7 @@ export default new Vuex.Store ({
 		},
 		
 		removeOne (state, payload) {
-			state[payload.address] = state[payload.address].filter (cur => cur.id !== payload.data)
+			state[payload.address] = state[payload.address].filter (cur => cur._id !== payload.data)
 		},
 		
 		resetState (state) {

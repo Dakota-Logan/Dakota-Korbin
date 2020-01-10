@@ -10,7 +10,7 @@
 				Task
 			</button>
 		</header>
-		<main>
+		<main class="container">
 			<task-component v-for="task in tasks" :taskData="task" :id="task._id"/>
 		</main>
 	</div>
@@ -77,5 +77,5 @@
 		top: 0;
 		right: 0;
 	}
-
+	
 </style>
