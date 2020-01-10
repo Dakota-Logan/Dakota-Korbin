@@ -158,13 +158,12 @@ export default new Vuex.Store ({
 			.then (res => {
 				commit (payload.commit, {
 					address: payload.address, data: res.data
-				});
-				
-				if (payload.commit2) {
-					//#todo finish 2nd commit for add/remove task function :)
-					commit ()
-				}
-			})
+			});
+			
+			if(payload.commit2) {
+				//#todo finish 2nd commit for add/remove task function :)
+				commit ()
+			}})
 			.catch (e => console.error (e));
 		},
 		
@@ -200,8 +199,7 @@ if (!Object.prototype.forEach) {
 		}
 	});
 }
-
 // Object-indexOf Polyfill - :)
-function getKeyByValue (object, value) {
-	return Object.keys (object).find (key => object[key] === value);
+function getKeyByValue(object, value) {
+	return Object.keys(object).find(key => object[key] === value);
 }
