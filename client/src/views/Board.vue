@@ -4,11 +4,8 @@
 			<router-link to="/">
 				<h3 id="home-link">Kanban</h3>
 			</router-link>
-		</header>
-		<main>
-			<FormModal/>
-			<!--Add list-->
 			<button
+				id="add-list"
 				class="btn btn-dark"
 				type="button"
 				data-toggle="modal"
@@ -18,8 +15,12 @@
 				Add
 				List
 			</button>
-			<p>This is your board you dumb fuck.</p>
-			<h1>{{board.title}}</h1>
+		</header>
+		<main>
+			<FormModal/>
+			<TaskModal />
+			<!--Add list-->
+			<h1 style="margin-top: 10px">{{board.title}}</h1>
 			<h3>{{board.description}}</h3>
 			<div id="lists">
 				<List v-for="list in lists" :id="list._id" :listData="list"/>
@@ -87,10 +88,16 @@
 </script>
 
 <style>
+	#add-list {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 10px 15px 0 0;
+	}
+
 	#board {
 		min-height: 100vh;
-		
-		/*background-color: rgb(51, 0, 59);*/
+
 		background-image: url('../assets/mountains-backdrop.jpg');
 		background-repeat: no-repeat;
 		background-size: cover;
