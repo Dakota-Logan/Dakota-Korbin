@@ -17,8 +17,9 @@ class CommentService {
     return data
   }
   async getCommentsByBoardId(boardId, uid) {
-    let data = await _repository.find({ boardId, authorId: uid });
-    return data;
+    let data = await _repository.find({ boardId, authorId: uid })
+    return data
+
   }
 
   async create(rawData) {
