@@ -1,8 +1,10 @@
 <template>
   <div class="list">
     <header>
-      <div></div>
+      <img class="delete-btn" src="../assets/trash.svg" alt="delete" @click="deleteList" />
+
       <h3>{{listData.title}}</h3>
+
       <button
         class="btn btn-dark"
         type="button"
@@ -31,12 +33,25 @@ export default {
   props: ["listData"],
   computed: {
     tasks() {
-      return this.$store.state.tasks.filter(cur => cur.listId === listData._id);
+      return this.$store.state.tasks.filter(
+        cur => cur.listId === this.listData._id
+      );
     }
   },
   methods: {
     modalAddTask() {
+      this.listData;
+      debugger;
+      this.$store.state.modalData = this.listData;
       this.$store.commit("setModalType", { address: "addTask", data: true });
+    },
+    deleteList() {
+      // console.log(this.listData._id)
+      this.$store.dispatch("delete", {
+        address: "lists",
+        id: this.listData._id,
+        commit: "removeOne"
+      });
     }
   }
 };
@@ -46,6 +61,15 @@ export default {
 .list {
   /*background-color: rgb(153,0,59);*/
   backdrop-filter: blur(5px) grayscale(35%);
+}
+
+.delete-btn {
+  margin: 0.25rem 0.5rem;
+
+  width: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 header {
@@ -61,4 +85,3 @@ header button {
   top: 0;
   right: 0;
 }
-</style>

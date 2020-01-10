@@ -10,7 +10,6 @@
       <form @submit="createTask">
         <input required type="text" v-model="newTask.title" placeholder="title" />
         <input type="text" v-model="newTask.description" placeholder="description" />
-        <input required type="text" v-model="newTask.listId" placeholder="title" />
         <button class="btn btn-success">Create Task</button>
       </form>
     </div>
@@ -27,7 +26,7 @@
 <script>
 export default {
   name: "FormModal",
-  // props: ["data", "id"],
+  props: ["data", "id"],
   mounted() {
     console.log("in modal");
   },
@@ -40,53 +39,47 @@ export default {
       newTask: {
         title: "",
         description: "",
-        boardId: this.$route.params.boardId
-        // listId: listId
+        boardId: this.$route.params.boardId,
+        listId: this.$store.state.modalData._id
       },
       newComment: {
         body: "",
         name: this.$store.state.user.name,
-        boardId: this.$route.params.boardId
-        // taskId: listId
-        // taskId: data.taskId
+        boardId: this.$route.params.boardId,
+        taskId: this.$store.state.modalData._id
       }
     };
   },
   methods: {
-    createList() {
-      // let newList = { ...this.newList };
-      this.$store.dispatch("create", {
+    async createList() {
+      await this.$store.dispatch("create", {
         address: "lists",
         commit: "addOne",
         data: this.newList
       });
+      this.newList = {
+        title: ""
+      };
     },
-    createTask() {
-      // let newTask = { ...this.newTask };
-      this.$store.dispatch("create", {
+    async createTask() {
+      console.log(this.$store.state.modalData, "New Task Data:" + this.newTask);
+      this.newTask.listId = this.$store.state.modalData._id;
+      debugger;
+      await this.$store.dispatch("create", {
         address: "tasks",
         commit: "addOne",
         data: this.newTask
       });
-      this.$store.dispatch("setModalType", { address: "addTask", data: false });
       this.newTask = {
         title: "",
-        description: "",
-        boardId: this.$route.params.boardId,
-        listId: ""
-        // listId: data.listId
+        description: ""
       };
     },
-    createComment() {
-      let newComment = { ...this.newComment };
-      this.$store.dispatch("create", {
+    async createComment() {
+      await this.$store.dispatch("create", {
         address: "comments",
         commit: "addOne",
         data: this.newComment
-      });
-      this.$store.dispatch("setModalType", {
-        address: "addComment",
-        data: false
       });
       this.newComment = {
         body: "",

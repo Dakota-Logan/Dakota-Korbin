@@ -26,7 +26,7 @@ export default class TasksController {
   async getAll(req, res, next) {
     try {
       //only gets tasks by user who is logged in
-      let data = await _taskService.getAll(req.session.uid)
+      let data = await _taskService.getAll(req.session.uid);
       return res.send(data)
     }
     catch (err) { next(err) }
@@ -34,7 +34,7 @@ export default class TasksController {
 
   async getById(req, res, next) {
     try {
-      let data = await _taskService.getById(req.body.id, req.session.uid)
+      let data = await _taskService.getById(req.params.id, req.session.uid);
       return res.send(data)
     } catch (error) { next(error) }
   }
@@ -50,14 +50,14 @@ export default class TasksController {
 
   async edit(req, res, next) {
     try {
-      let data = await _taskService.edit(req.body.id, req.body, req.session.uid)
+      let data = await _taskService.edit(req.params.id, req.body, req.session.uid)
       return res.send(data)
     } catch (error) { next(error) }
   }
 
   async delete(req, res, next) {
     try {
-      await _taskService.delete(req.body.id, req.session.uid)
+      await _taskService.delete(req.params.id, req.session.uid)
       return res.send("Successfully deleted")
     } catch (error) { next(error) }
   }

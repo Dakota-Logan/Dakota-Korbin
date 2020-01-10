@@ -32,7 +32,9 @@ export default new Vuex.Store({
 			addTask: false,
 			editTask: false,
 
-		}
+
+		},
+		modalData: {}
 	},
 	mutations: {
 		setUser(state, user) {
@@ -54,7 +56,7 @@ export default new Vuex.Store({
 
 		removeOne(state, payload) {
 			state[payload.address] = state[payload.address].filter(
-				cur => cur.id === payload.data
+				cur => cur.id !== payload.data
 			)
 		},
 
@@ -75,16 +77,14 @@ export default new Vuex.Store({
 			};
 		},
 
+
 		setModalType(state, payload) {
-			// console.log(state.modalObj);
 			state.modalObj.forEach(cur => {
-				console.log('Before: ' + cur);
 				if (cur == true) {
-					getKeyByValue(state.modalObj)
+					let key = getKeyByValue(state.modalObj, cur);
+					state.modalObj[key] = false;
 				}
-				console.log('After: ' + cur);
 			});
-			// console.log(state.modalObj);
 			state.modalObj[payload.address] = payload.data
 		}
 	},
@@ -144,6 +144,7 @@ export default new Vuex.Store({
 				.catch(e => console.error(e, e.message));
 		},
 
+
 		create({ commit }, payload) {
 			api
 				.post('' + payload.address, payload.data)
@@ -173,16 +174,17 @@ export default new Vuex.Store({
 				.catch(e => console.error(e));
 		},
 
+
 		delete({ commit }, payload) {
+			console.log(payload.id)
 			api
-				.delete('' + payload.address + payload.id)
+				.delete('' + payload.address + '/' + payload.id)
 				.then(res => {
 					commit(payload.commit, {
-						address: `${payload.address}`,
+						address: payload.address,
 						data: payload.id
 					})
-				})
-				.catch(e => console.error(e, e.message));
+				}).catch(e => console.error(e, e.message));
 		},
 	}
 })

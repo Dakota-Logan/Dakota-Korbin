@@ -1,11 +1,17 @@
 <template>
   <div class="task row">
     <div class="col-12">
-      <comment-component />
+      <h3>{{taskData.title}}</h3>
+      <h5>{{taskData.description}}</h5>
       <div>
-        <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <b-dropdown-item v-for="list in lists" :key="list._id"></b-dropdown-item>
-        </b-dropdown>
+        <select id="dropdown-1" text="Dropdown Button" class="m-md-2">
+          <option>First Action</option>
+          <option>Second Action</option>
+          <option>Third Action</option>
+          <option active>Active action</option>
+          <option disabled>Disabled action</option>
+        </select>
+        <comment-component v-for="comment in comments" />
       </div>
     </div>
   </div>
@@ -20,8 +26,10 @@ export default {
   // mounted() {
   // },
   computed: {
-    lists() {
-      this.$store.state.lists;
+    comments() {
+      return this.$store.state.comments.filter(
+        cur => cur.taskId === this.taskData._id
+      );
     }
   },
   methods: {
