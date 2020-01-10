@@ -1,7 +1,7 @@
 <template>
   <div class="task row" @click="popUpTask">
     <div class="col-12">
-      <img class="delete-btn" src="../assets/trash.svg" @click="deleteTask" />
+      <img class="delete-btn" src="../assets/icons8-delete.svg" @click="deleteTask" />
       <h3>{{taskData.title}}</h3>
       <h5>{{taskData.description}}</h5>
       <div>
@@ -9,9 +9,10 @@
           id="dropdown-1"
           text="Dropdown Button"
           class="m-md-2"
-          @change="setActiveList, changeList"
+          v-model="data"
+          @change="changeList"
         >
-          <option v-for="list in lists" :key="list._id">{{list.title}}</option>
+          <option v-for="list in lists" value="list" :key="list._id">{{list.title}}</option>
         </select>
       </div>
     </div>
@@ -24,6 +25,11 @@ import CommentComponent from "../components/Comment.vue";
 export default {
   name: "Task",
   props: ["taskData"],
+  data() {
+    return {
+      data: ""
+    };
+  },
   // mounted() {
   // },
   computed: {
@@ -37,14 +43,18 @@ export default {
     }
   },
   methods: {
-    setActiveList() {},
+    // setActiveList(list) {
+    //   console.log(list);
+    //   this.$store.state.activeTask = list;
+    // },
     changeList() {
-      this.$store.dispatch("edit", {
-        address: "tasks",
-        id: this.taskData._id,
-        commit: "setOne",
-        data: { listId: this.taskData.listId }
-      });
+      console.log(this.data);
+      // this.$store.dispatch("edit", {
+      //   address: "tasks",
+      //   id: this.taskData._id,
+      //   commit: "setOne",
+      //   data: this.$store.state.activeList
+      // });
     },
     deleteTask() {
       this.$store.dispatch("delete", {
@@ -67,7 +77,7 @@ export default {
 
   width: 30px;
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
 }
 </style>
