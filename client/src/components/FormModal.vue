@@ -8,15 +8,23 @@
 		</div>
 		<div class="task col" v-if="this.$store.state.modalObj.addTask">
 			<form @submit="createTask">
-				<input required type="text" v-model="newTask.title" placeholder="title"/>
-				<input type="text" v-model="newTask.description" placeholder="description"/>
+				<label>
+					<input required type="text" v-model="newTask.title" placeholder="title"/>
+				</label>
+				<label>
+					<input type="text" v-model="newTask.description" placeholder="description"/>
+				</label>
 				<button class="btn btn-success">Create Task</button>
 			</form>
 		</div>
 		<div class="comment col" v-if="this.$store.state.modalObj.addComment">
 			<form @submit="createComment">
-				<input required type="text" v-model="newComment.body" placeholder="comment"/>
-				<input required type="text" v-model="newComment.taskId" placeholder="title"/>
+				<label>
+					<input required type="text" v-model="newComment.body" placeholder="comment"/>
+				</label>
+				<label>
+					<input required type="text" v-model="newComment.taskId" placeholder="title"/>
+				</label>
 				<button class="btn btn-success">Create Comment</button>
 			</form>
 		</div>
@@ -27,7 +35,8 @@
 	export default {
 		name: "FormModal",
 		props: ["data", "id"],
-		mounted () {},
+		mounted () {
+		},
 		data () {
 			return {
 				newList: {
@@ -55,9 +64,7 @@
 					commit: "addOne",
 					data: this.newList
 				});
-				this.newList = {
-					title: ""
-				}
+				this.newList.title = "";
 			},
 			async createTask () {
 				console.log (this.$store.state.modalData, 'New Task Data:' + this.newTask);
@@ -67,10 +74,8 @@
 					commit: "addOne",
 					data: this.newTask
 				});
-				this.newTask = {
-					title: "",
-					description: ""
-				}
+				this.newTask.title = "";
+				this.newTask.description = "";
 			},
 			async createComment () {
 				await this.$store.dispatch ("create", {
@@ -78,12 +83,8 @@
 					commit: "addOne",
 					data: this.newComment
 				});
-				this.newComment = {
-					body: "",
-					name: this.$store.state.user.name,
-					boardId: this.$route.params.boardId,
-					taskId: ""
-				}
+				this.newComment.body = "";
+				this.newComment.taskId = "";
 			}
 		}
 	};

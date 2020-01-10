@@ -1,5 +1,5 @@
 <template>
-	<div class="task row" @click="popUpTask">
+	<div class="task row" @click="popUpTask" data-target="#task-modal" data-toggle="modal">
 		<div class="col-12">
 			<h3>{{taskData.title}}</h3>
 			<h5>{{taskData.description}}</h5>
@@ -37,7 +37,7 @@ export default {
 		  });
 	  },
 	popUpTask () {
-	
+	  	this.$store.state.modalData = this.taskData;
 	}
   },
   components: {
