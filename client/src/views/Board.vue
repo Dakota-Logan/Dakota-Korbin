@@ -94,19 +94,38 @@
 	#lists {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-between;
+		justify-content: space-evenly;
 	}
 	
 	.list {
-		margin: .5rem .75rem;
-		padding: .5rem .5rem;
+		margin: .25rem .4rem;
+		padding: .25rem .25rem;
 		
-		width: 20vw;
-		min-height: 60vh;
+		width: 80vw;
+		min-height: 400px;
 		border: 1px solid black;
 	}
 	
 	.btn {
 		filter: drop-shadow(2px 2px rgb(204, 0, 79));
 	}
+	
+	@media screen and (min-width: 800px) {
+		.list {
+			margin: .5rem .75rem;
+			padding: .5rem .5rem;
+			
+			width: 40vw;
+		}
+	}@media screen and (min-width: 1200px) {
+		.list {
+			width: 25vw;
+		}
+	}@media screen and (min-width: 1800px) {
+		.list {
+			width: 20vw;
+			min-height: 60vh;
+		}
+	}
+
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="task row">
     <div class="col-12">
-      <comment-component />
+      <comment-component v-for="comment in comments"/>
     </div>
   </div>
 </template>
@@ -14,7 +14,11 @@ export default {
   props: ["taskData"],
   // mounted() {
   // },
-  computed: {},
+  computed: {
+  	comments () {
+  		return this.$store.state.comments.filter (cur=>cur.taskId === this.taskData._id);
+    }
+  },
   methods: {},
   components: {
     CommentComponent

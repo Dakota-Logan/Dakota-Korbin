@@ -34,7 +34,7 @@ export default class ListsController {
 
   async getById(req, res, next) {
     try {
-      let data = await _listService.getById(req.body.id, req.session.uid)
+      let data = await _listService.getById(req.params.id, req.session.uid)
       return res.send(data)
     } catch (error) { next(error) }
   }
@@ -50,14 +50,14 @@ export default class ListsController {
 
   async edit(req, res, next) {
     try {
-      let data = await _listService.edit(req.body.id, req.session.uid, req.body)
+      let data = await _listService.edit(req.params.id, req.session.uid, req.body)
       return res.send(data)
     } catch (error) { next(error) }
   }
 
   async delete(req, res, next) {
     try {
-      await _listService.delete(req.body.id, req.session.uid)
+      await _listService.delete(req.params.id, req.session.uid)
       return res.send("Successfully deleted")
     } catch (error) { next(error) }
   }

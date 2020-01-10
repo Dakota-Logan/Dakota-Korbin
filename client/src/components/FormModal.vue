@@ -3,22 +3,21 @@
 		<div class="list col" v-if="this.$store.state.modalObj.addList">
 			<form @submit="createList">
 				<input required type="text" v-model="newList.title" placeholder="title"/>
-				<button class="btn btn-success" @click="createList">Create List</button>
+				<button class="btn btn-success">Create List</button>
 			</form>
 		</div>
 		<div class="task col" v-if="this.$store.state.modalObj.addTask">
 			<form @submit="createTask">
 				<input required type="text" v-model="newTask.title" placeholder="title"/>
 				<input type="text" v-model="newTask.description" placeholder="description"/>
-				<input required type="text" v-model="newTask.listId" placeholder="title"/>
-				<button class="btn btn-success" @click="createTask">Create Task</button>
+				<button class="btn btn-success">Create Task</button>
 			</form>
 		</div>
 		<div class="comment col" v-if="this.$store.state.modalObj.addComment">
 			<form @submit="createComment">
 				<input required type="text" v-model="newComment.body" placeholder="comment"/>
 				<input required type="text" v-model="newComment.taskId" placeholder="title"/>
-				<button class="btn btn-success" @click="createComment">Create Comment</button>
+				<button class="btn btn-success">Create Comment</button>
 			</form>
 		</div>
 	</div>
@@ -41,58 +40,47 @@
 					title: "",
 					description: "",
 					boardId: this.$route.params.boardId,
-					listId: ""
-					// listId: data.listId
+					listId: this.$store.state.modalData._id
 				},
 				newComment: {
 					body: "",
 					name: this.$store.state.user.name,
 					boardId: this.$route.params.boardId,
-					taskId: ""
-					// taskId: data.taskId
+					taskId: this.$store.state.modalData._id
 				}
 			};
 		},
 		methods: {
-			createList () {
-				document.getElementById('FormModal').on('hidden.bs.modal', console.log('working'))
-				
-				let newList = {...this.newList};
-				this.$store.dispatch ("create", {
+			async createList () {
+				await this.$store.dispatch ("create", {
 					address: "lists",
-					commit: "setOne",
+					commit: "addOne",
 					data: this.newList
 				});
-				this.$store.dispatch ('setModalType', {address: 'addList', data: false});
 				this.newList = {
-					title: "",
-					boardId: this.$route.params.boardId
+					title: ""
 				}
 			},
-			createTask () {
-				let newTask = {...this.newTask};
-				this.$store.dispatch ("create", {
+			async createTask () {
+				console.log (this.$store.state.modalData, 'New Task Data:' + this.newTask)
+				this.newTask.listId = this.$store.state.modalData._id
+				debugger
+				await this.$store.dispatch ("create", {
 					address: "tasks",
-					commit: "setOne",
+					commit: "addOne",
 					data: this.newTask
 				});
-				this.$store.dispatch ('setModalType', {address: 'addTask', data: false});
 				this.newTask = {
 					title: "",
-					description: "",
-					boardId: this.$route.params.boardId,
-					listId: ""
-					// listId: data.listId
+					description: ""
 				}
 			},
-			createComment () {
-				let newComment = {...this.newComment};
-				this.$store.dispatch ("create", {
+			async createComment () {
+				await this.$store.dispatch ("create", {
 					address: "comments",
-					commit: "setOne",
+					commit: "addOne",
 					data: this.newComment
 				});
-				this.$store.dispatch ('setModalType', {address: 'addComment', data: false});
 				this.newComment = {
 					body: "",
 					name: this.$store.state.user.name,
