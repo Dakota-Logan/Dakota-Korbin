@@ -5,13 +5,9 @@
       <h5>{{taskData.description}}</h5>
       <div>
         <select id="dropdown-1" text="Dropdown Button" class="m-md-2">
-          <option>First Action</option>
-          <option>Second Action</option>
-          <option>Third Action</option>
-          <option active>Active action</option>
-          <option disabled>Disabled action</option>
+          <option @click="changeList" v-for="list in lists" :key="list._id">{{list.title}}</option>
         </select>
-        <comment-component v-for="comment in comments" />
+        <comment-component v-for="comment in comments" :key="comment._id" />
       </div>
     </div>
   </div>
@@ -26,6 +22,9 @@ export default {
   // mounted() {
   // },
   computed: {
+    lists() {
+      return this.$store.state.lists;
+    },
     comments() {
       return this.$store.state.comments.filter(
         cur => cur.taskId === this.taskData._id
