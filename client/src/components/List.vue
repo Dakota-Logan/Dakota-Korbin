@@ -32,9 +32,8 @@
 		},
 		methods: {
 			modalAddTask () {
-				this.listData
-				debugger
-				this.$store.state.modalData = this.listData
+				this.listData;
+				this.$store.state.modalData = this.listData;
 				this.$store.commit ('setModalType', {address: 'addTask', data: true});
 			},
 			deleteList () {

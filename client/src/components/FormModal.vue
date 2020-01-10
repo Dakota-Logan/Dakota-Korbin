@@ -27,9 +27,7 @@
 	export default {
 		name: "FormModal",
 		props: ["data", "id"],
-		mounted () {
-			console.log ('in modal')
-		},
+		mounted () {},
 		data () {
 			return {
 				newList: {
@@ -62,9 +60,8 @@
 				}
 			},
 			async createTask () {
-				console.log (this.$store.state.modalData, 'New Task Data:' + this.newTask)
-				this.newTask.listId = this.$store.state.modalData._id
-				debugger
+				console.log (this.$store.state.modalData, 'New Task Data:' + this.newTask);
+				this.newTask.listId = this.$store.state.modalData._id;
 				await this.$store.dispatch ("create", {
 					address: "tasks",
 					commit: "addOne",

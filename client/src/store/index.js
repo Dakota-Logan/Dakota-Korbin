@@ -21,6 +21,7 @@ export default new Vuex.Store ({
 		boards: [],
 		lists: [],
 		tasks: [],
+		activeTask: [],
 		comments: [],
 		activeBoard: {},
 		modalObj: {
@@ -53,9 +54,7 @@ export default new Vuex.Store ({
 		},
 		
 		removeOne (state, payload) {
-			state[payload.address] = state[payload.address].filter (
-			cur => cur.id !== payload.data
-			)
+			state[payload.address] = state[payload.address].filter (cur => cur.id !== payload.data)
 		},
 		
 		resetState (state) {
@@ -77,8 +76,8 @@ export default new Vuex.Store ({
 		
 		setModalType (state, payload) {
 			state.modalObj.forEach (cur => {
-				if(cur==true) {
-					let key = getKeyByValue(state.modalObj, cur);
+				if (cur === true) {
+					let key = getKeyByValue (state.modalObj, cur);
 					state.modalObj[key] = false;
 				}
 			});
@@ -142,7 +141,6 @@ export default new Vuex.Store ({
 		},
 		
 		create ({commit}, payload) {
-debugger
 			api
 			.post ('' + payload.address, payload.data)
 			.then (res => {
@@ -160,17 +158,18 @@ debugger
 			.then (res => {
 				commit (payload.commit, {
 					address: payload.address, data: res.data
-			});
-			
-			if(payload.commit2) {
-				//#todo finish 2nd commit for add/remove task function :)
-				commit ()
-			}})
+				});
+				
+				if (payload.commit2) {
+					//#todo finish 2nd commit for add/remove task function :)
+					commit ()
+				}
+			})
 			.catch (e => console.error (e));
 		},
 		
 		delete ({commit}, payload) {
-			console.log (payload.id)
+			console.log (payload.id);
 			api
 			.delete ('' + payload.address + '/' + payload.id)
 			.then (res => {
@@ -201,7 +200,8 @@ if (!Object.prototype.forEach) {
 		}
 	});
 }
+
 // Object-indexOf Polyfill - :)
-function getKeyByValue(object, value) {
-	return Object.keys(object).find(key => object[key] === value);
+function getKeyByValue (object, value) {
+	return Object.keys (object).find (key => object[key] === value);
 }

@@ -7,6 +7,7 @@
     </header>
     <main>
       <FormModal />
+	    <TaskModal />
       <!--Add list-->
       <button
         class="btn btn-dark"
@@ -33,6 +34,7 @@
 <script>
 import List from "../components/List";
 import FormModal from "../components/FormModal.vue";
+import TaskModal from "../components/TaskModal";
 
 export default {
   name: "board",
@@ -58,7 +60,8 @@ export default {
   },
   components: {
     List,
-    FormModal
+    FormModal,
+	TaskModal
   },
   data() {
     return {};
@@ -166,6 +169,7 @@ export default {
   width: 20vw;
   min-height: 60vh;
   border: 1px solid black;
+	border-radius: 7px;
 }
 
 .btn {
