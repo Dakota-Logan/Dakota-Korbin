@@ -7,7 +7,7 @@ import AuthService from '../AuthService'
 Vue.use (Vuex);
 
 //Allows axios to work locally or live
-let base = window.location.host.includes ('localhost:8080') ? '//localhost:3000/' : '/'
+let base = window.location.host.includes ('localhost:8080') ? '//localhost:3000/' : '/';
 
 let api = Axios.create ({
 	baseURL: base + "api/",
@@ -21,11 +21,22 @@ export default new Vuex.Store ({
 		boards: [],
 		lists: [],
 		tasks: [],
+		activeTask: [],
 		comments: [],
-		activeBoard: {}
+		activeBoard: {},
+		modalObj: {
+			addComment: false,
+			editComment: false,
+			addList: false,
+			editList: false,
+			addTask: false,
+			editTask: false,
+			
+		},
+		modalData: {}
 	},
 	mutations: {
-		setUser(state, user) {
+		setUser (state, user) {
 			state.user = user
 		},
 		
@@ -43,9 +54,7 @@ export default new Vuex.Store ({
 		},
 		
 		removeOne (state, payload) {
-			state[payload.address] = state[payload.address].filter (
-			cur => cur.id === payload.data
-			)
+			state[payload.address] = state[payload.address].filter (cur => cur.id !== payload.data)
 		},
 		
 		resetState (state) {
@@ -62,7 +71,17 @@ export default new Vuex.Store ({
 					editTask: false,
 					
 				}
-			}
+			};
+		},
+		
+		setModalType (state, payload) {
+			state.modalObj.forEach (cur => {
+				if (cur === true) {
+					let key = getKeyByValue (state.modalObj, cur);
+					state.modalObj[key] = false;
+				}
+			});
+			state.modalObj[payload.address] = payload.data
 		}
 	},
 	actions: {
@@ -114,7 +133,7 @@ export default new Vuex.Store ({
 		
 		getOne ({commit}, payload) {
 			api
-			.get ('' + payload.address+'/'+payload.id)
+			.get ('' + payload.address + '/' + payload.id)
 			.then (res => {
 				commit (payload.commit, {address: payload.commitAddress, data: res.data})
 			})
@@ -135,24 +154,52 @@ export default new Vuex.Store ({
 		
 		edit ({commit}, payload) {
 			api
-			.put ('' + payload.address+'/'+payload.id, payload.data)
-			.then (res => commit (payload.commit, {
-				address: payload.address,
-				data: res.data
-			}))
+			.put ('' + payload.address + '/' + payload.id, payload.data)
+			.then (res => {
+				commit (payload.commit, {
+					address: payload.address, data: res.data
+			});
+			
+			if(payload.commit2) {
+				//#todo finish 2nd commit for add/remove task function :)
+				commit ()
+			}})
 			.catch (e => console.error (e));
 		},
 		
 		delete ({commit}, payload) {
+			console.log (payload.id);
 			api
-			.delete ('' + payload.address + payload.id)
+			.delete ('' + payload.address + '/' + payload.id)
 			.then (res => {
 				commit (payload.commit, {
-					address: `${payload.address}`,
+					address: payload.address,
 					data: payload.id
 				})
 			})
 			.catch (e => console.error (e, e.message));
-		}
+		},
 	}
 })
+
+
+// Object-forEach Polyfill - :)
+if (!Object.prototype.forEach) {
+	Object.defineProperty (Object.prototype, 'forEach', {
+		value: function (callback, thisArg) {
+			if (this == null) {
+				throw new TypeError ('Not an object');
+			}
+			thisArg = thisArg || window;
+			for (var key in this) {
+				if (this.hasOwnProperty (key)) {
+					callback.call (thisArg, this[key], key, this);
+				}
+			}
+		}
+	});
+}
+// Object-indexOf Polyfill - :)
+function getKeyByValue(object, value) {
+	return Object.keys(object).find(key => object[key] === value);
+}
