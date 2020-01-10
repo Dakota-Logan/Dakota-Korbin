@@ -27,7 +27,8 @@
 	export default {
 		name: "FormModal",
 		props: ["data", "id"],
-		mounted () {},
+		mounted () {
+		},
 		data () {
 			return {
 				newList: {
@@ -55,9 +56,7 @@
 					commit: "addOne",
 					data: this.newList
 				});
-				this.newList = {
-					title: ""
-				}
+				this.newList.title = "";
 			},
 			async createTask () {
 				console.log (this.$store.state.modalData, 'New Task Data:' + this.newTask);
@@ -67,10 +66,8 @@
 					commit: "addOne",
 					data: this.newTask
 				});
-				this.newTask = {
-					title: "",
-					description: ""
-				}
+				this.newTask.title = "";
+				this.newTask.description = "";
 			},
 			async createComment () {
 				await this.$store.dispatch ("create", {
@@ -78,12 +75,8 @@
 					commit: "addOne",
 					data: this.newComment
 				});
-				this.newComment = {
-					body: "",
-					name: this.$store.state.user.name,
-					boardId: this.$route.params.boardId,
-					taskId: ""
-				}
+				this.newComment.body = "";
+				this.newComment.taskId = "";
 			}
 		}
 	};
