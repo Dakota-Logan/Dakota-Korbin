@@ -8,6 +8,7 @@
     </form>
     <div v-for="board in boards" :key="board._id">
       <router-link :to="'boards/'+board._id" @click="moveBoard(board._id)">{{board.title}}</router-link>
+      <button class="btn btn-danger" @click=" removeBoard(board._id)"></button>
     </div>
   </div>
 </template>
@@ -36,20 +37,29 @@ export default {
     }
   },
   methods: {
-    addBoard() {
+    addBoard(boardId) {
       this.$store.dispatch("create", {
         address: "boards",
         commit: "addOne",
         commitAddress: "boards",
-        data: this.newBoard
+        data: boardId
       });
       this.newBoard = { title: "", description: "" };
     },
-    moveBoard(id) {
-      this.$store.state.activeBoard = this.$store.state.find(
-        cur => cur._id == id
-      );
+    removeBoard(board) {
+      console.log(board);
+
+      this.$store.dispatch("delete", {
+        address: "boards",
+        commit: "removeOne",
+        id: board
+      });
     }
+  },
+  moveBoard(id) {
+    this.$store.state.activeBoard = this.$store.state.find(
+      cur => cur._id == id
+    );
   }
 };
 </script>

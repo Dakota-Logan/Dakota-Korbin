@@ -163,7 +163,6 @@ export default new Vuex.Store({
 		},
 
 		delete({ commit }, payload) {
-			console.log(payload.id);
 			api
 				.delete('' + payload.address + '/' + payload.id)
 				.then(res => {
