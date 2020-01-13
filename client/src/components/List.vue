@@ -1,5 +1,6 @@
 <template>
 	<div class="list">
+		
 		<header>
 			<img class="delete-btn" src="../assets/trash.svg" alt="delete" @click="deleteList">
 			
@@ -37,7 +38,6 @@
 				this.$store.commit ('setModalType', {address: 'addTask', data: true});
 			},
 			deleteList () {
-				// console.log(this.listData._id)
 				this.$store.dispatch('delete', {
 					address: 'lists',
 					id: this.listData._id,
@@ -49,33 +49,7 @@
 </script>
 
 <style scoped>
-	.list {
-		/*background-color: rgb(153,0,59);*/
-		backdrop-filter: blur(5px) grayscale(35%);
-		
-	}
 	
-	.delete-btn {
-		margin: .25rem .5rem;
-		
-		width: 30px;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
-	
-	header {
-		width: 100%;
-		
-		border-bottom: 1px solid black;
-	}
-	
-	header button {
-		margin: 1%;
-		
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
+	@import "../assets/styles/List.css";
 	
 </style>

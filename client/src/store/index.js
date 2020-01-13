@@ -50,11 +50,20 @@ export default new Vuex.Store ({
 		
 		addOne (state, payload) {
 			state[payload.address].push (payload.data);
-			console.log (state[payload.address])
+			Vue.notify({
+				group:'Confirm',
+				title: 'Completed',
+				text: 'Successfully added'
+			});
 		},
 		
 		removeOne (state, payload) {
-			state[payload.address] = state[payload.address].filter (cur => cur._id !== payload.data)
+			state[payload.address] = state[payload.address].filter (cur => cur._id !== payload.data);
+			Vue.notify({
+				group:'Confirm',
+				title: 'Completed',
+				text: 'Successfully deleted'
+			})
 		},
 		
 		resetState (state) {
