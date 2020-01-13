@@ -1,22 +1,30 @@
 <template>
 	<div id="FormModal" class="modal row" tabindex="-1" role="dialog">
-		<div class="list col" v-if="this.$store.state.modalObj.addList">
+		<div class="create-form col" v-if="this.$store.state.modalObj.addList">
 			<form @submit="createList">
 				<input required type="text" v-model="newList.title" placeholder="title"/>
 				<button class="btn btn-success">Create List</button>
 			</form>
 		</div>
-		<div class="task col" v-if="this.$store.state.modalObj.addTask">
+		<div class="create-form col" v-if="this.$store.state.modalObj.addTask">
 			<form @submit="createTask">
-				<input required type="text" v-model="newTask.title" placeholder="title"/>
-				<input type="text" v-model="newTask.description" placeholder="description"/>
+				<label>
+					<input required type="text" v-model="newTask.title" placeholder="title"/>
+				</label>
+				<label>
+					<input type="text" v-model="newTask.description" placeholder="description"/>
+				</label>
 				<button class="btn btn-success">Create Task</button>
 			</form>
 		</div>
-		<div class="comment col" v-if="this.$store.state.modalObj.addComment">
+		<div class="create-form col" v-if="this.$store.state.modalObj.addComment">
 			<form @submit="createComment">
-				<input required type="text" v-model="newComment.body" placeholder="comment"/>
-				<input required type="text" v-model="newComment.taskId" placeholder="title"/>
+				<label>
+					<input required type="text" v-model="newComment.body" placeholder="comment"/>
+				</label>
+				<label>
+					<input required type="text" v-model="newComment.taskId" placeholder="title"/>
+				</label>
 				<button class="btn btn-success">Create Comment</button>
 			</form>
 		</div>
@@ -59,7 +67,6 @@
 				this.newList.title = "";
 			},
 			async createTask () {
-				console.log (this.$store.state.modalData, 'New Task Data:' + this.newTask);
 				this.newTask.listId = this.$store.state.modalData._id;
 				await this.$store.dispatch ("create", {
 					address: "tasks",

@@ -4,12 +4,8 @@
       <router-link to="/">
         <h3 id="home-link">Kanban</h3>
       </router-link>
-    </header>
-    <main>
-      <FormModal />
-      <TaskModal />
-      <!--Add list-->
       <button
+        id="add-list"
         class="btn btn-dark"
         type="button"
         data-toggle="modal"
@@ -19,11 +15,15 @@
         Add
         List
       </button>
-      <p>This is your board you dumb fuck.</p>
-      <h1>{{board.title}}</h1>
+    </header>
+    <main>
+      <FormModal />
+      <TaskModal />
+      <!--Add list-->
+      <h1 style="margin-top: 10px">{{board.title}}</h1>
       <h3>{{board.description}}</h3>
       <div id="lists">
-        <List v-for="list in lists" :id="list._id" :listData="list"></List>
+        <List v-for="list in lists" :id="list._id" :listData="list" />
       </div>
     </main>
   </div>
@@ -33,6 +33,7 @@
 <script>
 import List from "../components/List";
 import FormModal from "../components/FormModal.vue";
+import TaskModal from "../components/TaskModal";
 
 export default {
   name: "board",
@@ -56,12 +57,13 @@ export default {
         address: "boards/" + this.$route.params.boardId + "/comments",
         commitAddress: "comments"
       }),
-      1000
+      5000
     );
   },
   components: {
     List,
-    FormModal
+    FormModal,
+    TaskModal
   },
   data() {
     return {};
@@ -89,96 +91,7 @@ export default {
 </script>
 
 <style>
-#board {
-  min-height: 100vh;
-
-  /*background-color: rgb(51, 0, 59);*/
-  background-image: url("../assets/mountains-backdrop.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: white;
-  text-shadow: 2px 2px gray;
-}
-
-#home-link {
-  text-shadow: 1px 1px black;
-}
-
-#lists {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
-.list {
-  margin: 0.25rem 0.4rem;
-  padding: 0.25rem 0.25rem;
-
-  width: 80vw;
-  min-height: 400px;
-  border: 1px solid black;
-}
-
-.btn {
-  filter: drop-shadow(2px 2px rgb(204, 0, 79));
-}
-
-@media screen and (min-width: 800px) {
-  .list {
-    margin: 0.5rem 0.75rem;
-    padding: 0.5rem 0.5rem;
-
-    width: 40vw;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .list {
-    width: 25vw;
-  }
-}
-
-@media screen and (min-width: 1800px) {
-  .list {
-    width: 20vw;
-    min-height: 60vh;
-  }
-}
-
-#board {
-  min-height: 100vh;
-
-  /*background-color: rgb(51, 0, 59);*/
-  background-image: url("../assets/mountains-backdrop.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: white;
-  text-shadow: 2px 2px gray;
-}
-
-#home-link {
-  text-shadow: 1px 1px black;
-}
-
-#lists {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.list {
-  margin: 0.5rem 0.75rem;
-  padding: 0.5rem 0.5rem;
-
-  width: 20vw;
-  min-height: 60vh;
-  border: 1px solid black;
-  border-radius: 7px;
-}
-
-.btn {
-  filter: drop-shadow(2px 2px rgb(204, 0, 79));
-}
+@import "../assets/styles/Board.css";
 </style>
 
 //

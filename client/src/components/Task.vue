@@ -6,13 +6,14 @@
       <h5>{{taskData.description}}</h5>
       <div>
         <select
+          style="z-index: 2"
           id="dropdown-1"
           text="Dropdown Button"
           class="m-md-2"
           v-model="data"
           @change="changeList"
         >
-          <option v-for="list in lists" value="list" :key="list._id">{{list.title}}</option>
+          <option @click="changeList" v-for="list in lists" :key="list._id">{{list.title}}</option>
         </select>
       </div>
     </div>
@@ -43,18 +44,12 @@ export default {
     }
   },
   methods: {
-    // setActiveList(list) {
-    //   console.log(list);
-    //   this.$store.state.activeTask = list;
-    // },
     changeList() {
-      console.log(this.data);
-      // this.$store.dispatch("edit", {
-      //   address: "tasks",
-      //   id: this.taskData._id,
-      //   commit: "setOne",
-      //   data: this.$store.state.activeList
-      // });
+      this.$store.dipatch("edit", {
+        address: "lists",
+        commit: "setOne"
+        // data:
+      });
     },
     deleteTask() {
       this.$store.dispatch("delete", {
@@ -63,7 +58,10 @@ export default {
         id: this.taskData._id
       });
     },
-    popUpTask() {}
+    popUpTask() {
+      this.$store.state.activeTask = this.taskData;
+      this.$store.state.activeTask;
+    }
   },
   components: {
     CommentComponent
