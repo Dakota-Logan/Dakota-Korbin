@@ -37,12 +37,12 @@ export default {
     }
   },
   methods: {
-    addBoard(boardId) {
+    addBoard() {
       this.$store.dispatch("create", {
         address: "boards",
         commit: "addOne",
         commitAddress: "boards",
-        data: boardId
+        data: this.newBoard
       });
       this.newBoard = { title: "", description: "" };
     },

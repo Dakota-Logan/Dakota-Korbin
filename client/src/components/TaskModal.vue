@@ -29,7 +29,7 @@
 		},
 		computed: {
 			comments () {
-				return this.$store.state.comments;
+				return this.$store.state.comments.filter(cur => cur.taskId === this.task._id);
 			},
 			task () {
 				return this.$store.state.activeTask;

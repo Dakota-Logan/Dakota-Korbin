@@ -1,5 +1,5 @@
 <template>
-  <div class="task row" @click="popUpTask">
+  <div class="task row" @click="popUpTask" data-toggle="modal" data-target="#task-modal">
     <div class="col-12">
       <img class="delete-btn" src="../assets/icons8-delete.svg" @click="deleteTask" />
       <h3>{{taskData.title}}</h3>
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     changeList() {
-      this.$store.dipatch("edit", {
+      this.$store.dispatch("edit", {
         address: "lists",
         commit: "setOne"
         // data:
