@@ -58,6 +58,7 @@ export default new Vuex.Store({
 		},
 
 		resetState(state) {
+			// @ts-ignore
 			state = {
 				user: {},
 				boards: [],
@@ -69,9 +70,10 @@ export default new Vuex.Store({
 					editList: false,
 					addTask: false,
 					editTask: false,
-
-				}
+				},
+				modalData: {}
 			};
+			// return state
 		},
 
 		setModalType(state, payload) {
