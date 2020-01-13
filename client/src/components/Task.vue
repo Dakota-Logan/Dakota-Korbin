@@ -4,7 +4,7 @@
 			<h3>{{taskData.title}}</h3>
 			<h5>{{taskData.description}}</h5>
 			<div>
-			<select id="dropdown-1" text="Dropdown Button" class="m-md-2" @change="">
+			<select style="z-index: 2" id="dropdown-1" text="Dropdown Button" class="m-md-2" @change="">
                <option @click="changeList" v-for="list in lists" :key="list._id">{{list.title}}</option>
 			</select>
       </div>
@@ -18,8 +18,8 @@ import CommentComponent from "../components/Comment.vue";
 export default {
   name: "Task",
   props: ["taskData"],
-  // mounted() {
-  // },
+  mounted() {
+  },
   computed: {
 	  lists() {
 		  return this.$store.state.lists;
@@ -37,7 +37,8 @@ export default {
 		  });
 	  },
 	popUpTask () {
-	  	this.$store.state.modalData = this.taskData;
+	  	this.$store.state.activeTask = this.taskData;
+	  	this.$store.state.activeTask;
 	}
   },
   components: {
