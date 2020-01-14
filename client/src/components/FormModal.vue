@@ -1,13 +1,13 @@
 <template>
 	<div id="FormModal" class="modal row" tabindex="-1" role="dialog">
 		<div class="create-form col" v-if="this.$store.state.modalObj.addList">
-			<form @submit="createList">
+			<form @submit.prevent="createList">
 				<input required type="text" v-model="newList.title" placeholder="title"/>
 				<button class="btn btn-success">Create List</button>
 			</form>
 		</div>
 		<div class="create-form col" v-if="this.$store.state.modalObj.addTask">
-			<form @submit="createTask">
+			<form @submit.prevent="createTask">
 				<label>
 					<input required type="text" v-model="newTask.title" placeholder="title"/>
 				</label>
@@ -18,7 +18,7 @@
 			</form>
 		</div>
 		<div class="create-form col" v-if="this.$store.state.modalObj.addComment">
-			<form @submit="createComment">
+			<form @submit.prevent="createComment">
 				<label>
 					<input required type="text" v-model="newComment.body" placeholder="comment"/>
 				</label>

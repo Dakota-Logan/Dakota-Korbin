@@ -4,18 +4,18 @@ import Axios from 'axios'
 import router from '../router/index'
 import AuthService from '../AuthService'
 
-Vue.use(Vuex);
+Vue.use (Vuex);
 
 //Allows axios to work locally or live
-let base = window.location.host.includes('localhost:8080') ? '//localhost:3000/' : '/';
+let base = window.location.host.includes ('localhost:8080') ? '//localhost:3000/' : '/';
 
-let api = Axios.create({
+let api = Axios.create ({
 	baseURL: base + "api/",
 	timeout: 3000,
 	withCredentials: true
 })
 
-export default new Vuex.Store({
+export default new Vuex.Store ({
 	state: {
 		user: {},
 		boards: [],
@@ -31,43 +31,43 @@ export default new Vuex.Store({
 			editList: false,
 			addTask: false,
 			editTask: false,
-
+			
 		},
 		modalData: {}
 	},
 	mutations: {
-		setUser(state, user) {
+		setUser (state, user) {
 			state.user = user
 		},
-
-		setAll(state, payload) {
+		
+		setAll (state, payload) {
 			state[payload.address] = payload.data;
 		},
-
-		setOne(state, payload) {
+		
+		setOne (state, payload) {
 			state[payload.address] = payload.data;
 		},
-
-
-		addOne(state, payload) {
-			state[payload.address].push(payload.data);
-			Vue.notify({
+		
+		
+		addOne (state, payload) {
+			state[payload.address].push (payload.data);
+			Vue.notify ({
 				group: 'Confirm',
 				title: 'Completed',
 				text: 'Successfully added'
 			});
 		},
-
-		removeOne(state, payload) {
-			state[payload.address] = state[payload.address].filter(cur => cur._id !== payload.data);
-			Vue.notify({
+		
+		removeOne (state, payload) {
+			state[payload.address] = state[payload.address].filter (cur => cur._id !== payload.data);
+			Vue.notify ({
 				group: 'Confirm',
 				title: 'Completed',
 				text: 'Successfully deleted'
 			})
 		},
-
-		resetState(state) {
+		
+		resetState (state) {
 			// @ts-ignore
 			state = {
 				user: {},
@@ -85,11 +85,11 @@ export default new Vuex.Store({
 			};
 			// return state
 		},
-
-		setModalType(state, payload) {
-			state.modalObj.forEach(cur => {
+		
+		setModalType (state, payload) {
+			state.modalObj.forEach (cur => {
 				if (cur === true) {
-					let key = getKeyByValue(state.modalObj, cur);
+					let key = getKeyByValue (state.modalObj, cur);
 					state.modalObj[key] = false;
 				}
 			});
@@ -98,92 +98,92 @@ export default new Vuex.Store({
 	},
 	actions: {
 		//#region -- AUTH STUFF --
-		async register({ commit, dispatch }, creds) {
+		async register ({commit, dispatch}, creds) {
 			try {
-				let user = await AuthService.Register(creds);
-
-				commit('setOne', { address: 'user', data: user });
-
-				router.push({ name: "boards" })
+				let user = await AuthService.Register (creds);
+				
+				commit ('setOne', {address: 'user', data: user});
+				
+				router.push ({name: "boards"})
 			} catch (e) {
-				console.warn(e.message)
+				console.warn (e.message)
 			}
 		},
-		async login({ commit, dispatch }, creds) {
+		async login ({commit, dispatch}, creds) {
 			try {
-				let user = await AuthService.Login(creds);
-				commit('setOne', { address: 'user', data: user });
-				router.push({ name: "boards" })
+				let user = await AuthService.Login (creds);
+				commit ('setOne', {address: 'user', data: user});
+				router.push ({name: "boards"})
 			} catch (e) {
-				console.warn(e.message)
+				console.warn (e.message)
 			}
 		},
-		async logout({ commit, dispatch }) {
+		async logout ({commit, dispatch}) {
 			try {
-				let success = await AuthService.Logout();
+				let success = await AuthService.Logout ();
 				if (!success) {
 				}
-				commit('resetState');
-				router.push({ name: "login" })
+				commit ('resetState');
+				router.push ({name: "login"})
 			} catch (e) {
-				console.warn(e.message)
+				console.warn (e.message)
 			}
 		},
 		//#endregion
-
-		getAll({ commit }, payload) {
+		
+		getAll ({commit}, payload) {
 			api
-				.get('' + payload.address)
-				.then(res =>
-					commit('setAll', {
-						address: `${payload.commitAddress}`,
-						data: res.data
-					})
-				)
-				.catch(e => console.error(e));
+			.get ('' + payload.address)
+			.then (res =>
+			commit ('setAll', {
+				address: `${payload.commitAddress}`,
+				data: res.data
+			})
+			)
+			.catch (e => console.error (e));
 		},
-
-		getOne({ commit }, payload) {
+		
+		getOne ({commit}, payload) {
 			api
-				.get('' + payload.address + '/' + payload.id)
-				.then(res => {
-					commit(payload.commit, { address: payload.commitAddress, data: res.data })
+			.get ('' + payload.address + '/' + payload.id)
+			.then (res => {
+				commit (payload.commit, {address: payload.commitAddress, data: res.data})
+			})
+			.catch (e => console.error (e, e.message));
+		},
+		
+		create ({commit}, payload) {
+			api
+			.post ('' + payload.address, payload.data)
+			.then (res => {
+				commit (payload.commit, {
+					address: payload.address,
+					data: res.data
 				})
-				.catch(e => console.error(e, e.message));
+			})
+			.catch (e => console.error (e, e.message));
 		},
-
-		create({ commit }, payload) {
+		
+		edit ({commit, dispatch}, payload) {
 			api
-				.post('' + payload.address, payload.data)
-				.then(res => {
-					commit(payload.commit, {
-						address: payload.address,
-						data: res.data
-					})
+			.put ('' + payload.address + '/' + payload.id, payload.data)
+			.then (res => {
+				commit (payload.commit, {
+					address: payload.address, data: res.data
+				});
+			}).catch (e => console.error (e));
+		},
+		
+		delete ({commit}, payload) {
+			api
+			.delete ('' + payload.address + '/' + payload.id)
+			.then (res => {
+				commit (payload.commit, {
+					address: payload.address,
+					data: payload.id
 				})
-				.catch(e => console.error(e, e.message));
-		},
-
-		edit({ commit }, payload) {
-			api
-				.put('' + payload.address + '/' + payload.id, payload.data)
-				.then(res => {
-					commit(payload.commit, {
-						address: payload.address, data: res.data
-					})
-				}).catch(e => console.error(e));
-		},
-
-		delete({ commit }, payload) {
-			api
-				.delete('' + payload.address + '/' + payload.id)
-				.then(res => {
-					commit(payload.commit, {
-						address: payload.address,
-						data: payload.id
-					})
-				})
-				.catch(e => console.error(e, e.message));
+			})
+			.catch (e => console.error (e, e.message));
 		},
 	}
 })
@@ -191,21 +191,22 @@ export default new Vuex.Store({
 
 // Object-forEach Polyfill - :)
 if (!Object.prototype.forEach) {
-	Object.defineProperty(Object.prototype, 'forEach', {
+	Object.defineProperty (Object.prototype, 'forEach', {
 		value: function (callback, thisArg) {
 			if (this == null) {
-				throw new TypeError('Not an object');
+				throw new TypeError ('Not an object');
 			}
 			thisArg = thisArg || window;
 			for (var key in this) {
-				if (this.hasOwnProperty(key)) {
-					callback.call(thisArg, this[key], key, this);
+				if (this.hasOwnProperty (key)) {
+					callback.call (thisArg, this[key], key, this);
 				}
 			}
 		}
 	});
 }
+
 // Object-indexOf Polyfill - :)
-function getKeyByValue(object, value) {
-	return Object.keys(object).find(key => object[key] === value);
+function getKeyByValue (object, value) {
+	return Object.keys (object).find (key => object[key] === value);
 }
